@@ -7,13 +7,20 @@ import { connectMongoDb } from './models/initMongoose.js'
 import { AuthRouters } from './routers/auth.router.js'
 import { LoanTakerRoutes } from './routers/loanTaker.router.js'
 import { LoanGiverRoutes } from './routers/loanGiver.router.js'
-
+import path from 'path'
+import fs from 'fs'
+import { checkEnvVariables } from './utils/checkEnvVariables.js'
 const app = express()
 
 // configure environmental variables of .env file
 if (process.env.NODE_ENV !== 'production') {
+    if (!fs.existsSync(path.join(path.resolve(), '.env'))) {
+        console.error('.env file not exist')
+        process.exit()
+    }
     dotenv.config()
 }
+checkEnvVariables()
 
 // MIDDLEWARES
 // Request body parser middleware
@@ -30,7 +37,6 @@ try {
     console.log(err)
     process.exit()
 }
-
 // CHECK SERVER HEALTH
 app.get('/check', (req, res) => {
     res.send({ message: 'Server up and running....' })
