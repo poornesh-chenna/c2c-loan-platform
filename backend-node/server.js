@@ -8,7 +8,9 @@ import { connectMongoDb } from './models/initMongoose.js'
 const app = express()
 
 // configure environmental variables of .env file
-dotenv.config()
+if (process.env.NODE_ENV !== 'production') {
+    dotenv.config()
+}
 
 // middlewares
 app.use(express.json())
