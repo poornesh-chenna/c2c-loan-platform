@@ -4,6 +4,9 @@ import dotenv from 'dotenv'
 import { notFound } from './middlewares/notFound.js'
 import { errorHandler } from './middlewares/errorHandler.js'
 import { connectMongoDb } from './models/initMongoose.js'
+import { AuthRouters } from './routers/auth.router.js'
+import { LoanTakerRoutes } from './routers/loanTaker.router.js'
+import { LoanGiverRoutes } from './routers/loanGiver.router.js'
 
 const app = express()
 
@@ -12,10 +15,13 @@ if (process.env.NODE_ENV !== 'production') {
     dotenv.config()
 }
 
-// middlewares
+// MIDDLEWARES
+// Request body parser middleware
 app.use(express.json())
+// Cors middleware to allow access from all sites (*)
 app.use(cors())
 
+// CONNECT TO MONGODB DATABASE SERVER
 try {
     await connectMongoDb()
     console.log('MongoDB connected.....')
@@ -25,11 +31,24 @@ try {
     process.exit()
 }
 
+// CHECK SERVER HEALTH
 app.get('/check', (req, res) => {
     res.send({ message: 'Server up and running....' })
 })
 
+//AUTHENTICATION ROUTERS - LOGIN AND SIGNUP
+app.use(AuthRouters)
+
+//APIS TO BORROW LOANS
+app.use(LoanTakerRoutes)
+
+//APIS TO LEND LOANS
+app.use(LoanGiverRoutes)
+
+// REQUESTED ROUTE NOT FOUND
 app.use(notFound)
+
+// GLOBAL ERROR HANDLING FOR API REQUEST
 app.use(errorHandler)
 
 app.listen(process.env.PORT, () => {
