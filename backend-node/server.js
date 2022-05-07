@@ -1,37 +1,21 @@
-<<<<<<< HEAD
-import express from 'express'
-import cors from 'cors'
-import dotenv from 'dotenv'
-import path from 'path'
-import fs from 'fs'
-import swaggerUI from 'swagger-ui-express'
-
-import { notFound } from './middlewares/notFound.js'
-import { errorHandler } from './middlewares/errorHandler.js'
-import { connectMongoDb } from './models/initMongoose.js'
-import { AuthRouters } from './routers/auth.router.js'
-import { LoanTakerRoutes } from './routers/loanTaker.router.js'
-import { LoanGiverRoutes } from './routers/loanGiver.router.js'
-import { checkEnvVariables } from './utils/checkEnvVariables.js'
-import { SwaggerSpecs } from './utils/swaggerSetup.js'
-import { routing } from './routers/routing.js'
-
-const app = express()
-=======
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
+import fs from "fs";
+import swaggerUI from "swagger-ui-express";
+
 import { notFound } from "./middlewares/notFound.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { connectMongoDb } from "./models/initMongoose.js";
 import { AuthRouters } from "./routers/auth.router.js";
 import { LoanTakerRoutes } from "./routers/loanTaker.router.js";
 import { LoanGiverRoutes } from "./routers/loanGiver.router.js";
-import path from "path";
-import fs from "fs";
 import { checkEnvVariables } from "./utils/checkEnvVariables.js";
+import { SwaggerSpecs } from "./utils/swaggerSetup.js";
+import { routing } from "./routers/routing.js";
+
 const app = express();
->>>>>>> 6e81697a83c7e7a5a10d8aa66859168b6665722d
 
 // configure environmental variables of .env file
 if (process.env.NODE_ENV !== "production") {
@@ -41,13 +25,9 @@ if (process.env.NODE_ENV !== "production") {
   }
   dotenv.config();
 }
-<<<<<<< HEAD
 
 // CHECKS FOR ALL REQUIRED ENV VARIABLES
-checkEnvVariables()
-=======
 checkEnvVariables();
->>>>>>> 6e81697a83c7e7a5a10d8aa66859168b6665722d
 
 // MIDDLEWARES
 // Request body parser middleware
@@ -78,9 +58,9 @@ app.use(LoanTakerRoutes);
 //APIS TO LEND LOANS
 app.use(LoanGiverRoutes);
 
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(SwaggerSpecs))
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(SwaggerSpecs));
 
-app.use(routing)
+app.use(routing);
 // REQUESTED ROUTE NOT FOUND
 app.use(notFound);
 
