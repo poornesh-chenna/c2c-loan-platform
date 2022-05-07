@@ -1,15 +1,20 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import path from 'path'
+import fs from 'fs'
+import swaggerUI from 'swagger-ui-express'
+
 import { notFound } from './middlewares/notFound.js'
 import { errorHandler } from './middlewares/errorHandler.js'
 import { connectMongoDb } from './models/initMongoose.js'
 import { AuthRouters } from './routers/auth.router.js'
 import { LoanTakerRoutes } from './routers/loanTaker.router.js'
 import { LoanGiverRoutes } from './routers/loanGiver.router.js'
-import path from 'path'
-import fs from 'fs'
 import { checkEnvVariables } from './utils/checkEnvVariables.js'
+import { SwaggerSpecs } from './utils/swaggerSetup.js'
+import { routing } from './routers/routing.js'
+
 const app = express()
 
 // configure environmental variables of .env file
@@ -20,6 +25,8 @@ if (process.env.NODE_ENV !== 'production') {
     }
     dotenv.config()
 }
+
+// CHECKS FOR ALL REQUIRED ENV VARIABLES
 checkEnvVariables()
 
 // MIDDLEWARES
@@ -51,6 +58,9 @@ app.use(LoanTakerRoutes)
 //APIS TO LEND LOANS
 app.use(LoanGiverRoutes)
 
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(SwaggerSpecs))
+
+app.use(routing)
 // REQUESTED ROUTE NOT FOUND
 app.use(notFound)
 
