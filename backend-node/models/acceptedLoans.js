@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { User } from "./users";
-import { Loan } from "./loans";
+import { User } from "./users.js";
+import { Loan } from "./loans.js";
 
 const Accepted_loans_Schema = new mongoose.Schema(
   {

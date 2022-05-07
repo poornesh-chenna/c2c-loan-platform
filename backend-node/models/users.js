@@ -13,32 +13,16 @@ const userSchema = new Schema({
   password: {
     type: String,
   },
-  photo: {
-    data: Buffer,
-    type: String,
-  },
-  aadhar: {
-    data: Buffer,
-    type: String,
-  },
-  pan: {
-    data: Buffer,
-    type: String,
-  },
+  profile_image: String,
+  aadhar_image: String,
+  pancard_image: String,
   salary: {
     type: Number,
   },
-  bankDetails: {
-    bank_name: {
-      type: String,
-    },
-    customer_name: {
-      type: String,
-    },
-    Account_no: {
-      type: Number,
-    },
-  },
+  bank_name: String,
+  customer_name: String,
+  Account_no: Number,
+
   cibil: {
     type: Number,
   },

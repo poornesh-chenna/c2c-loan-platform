@@ -9,30 +9,28 @@ const loanSchema = new Schema({
   },
   Amount: {
     type: Number,
-    required: true,
   },
   Tenure: {
-    type: String,
-    required: true,
+    type: Number,
   },
   Interest_Rate: {
     type: Number,
-    required: true,
+    max: 100,
   },
   modified: [
     {
-      user_id: {
+      modified_user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
       Tenure: {
         type: String,
       },
-      IR: {
+      Interest_Rate: {
         type: Number,
       },
     },
   ],
 });
 
-export const Loan = mongoose.model("loan", loanSchema);
+export const Loan = mongoose.model("Loan", loanSchema);
