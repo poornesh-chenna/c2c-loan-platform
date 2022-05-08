@@ -21,10 +21,11 @@ import {
     ListItemIcon,
 } from '@mui/material'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { ROUTES } from '../utils/routes'
 
 const drawerWidth = 240
 const Profile = () => {
-    const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+    const navigate = useNavigate()
     const [anchorElUser, setAnchorElUser] = React.useState(null)
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget)
@@ -33,6 +34,14 @@ const Profile = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null)
     }
+    const logoutHandler = () => {
+        localStorage.removeItem('jwtKey')
+        navigate(ROUTES.HOME)
+    }
+    const settings = [
+        { menuName: 'Profile', cb: () => {} },
+        { menuName: 'Logout', cb: logoutHandler },
+    ]
     return (
         <>
             <Tooltip title='Open settings'>
@@ -57,8 +66,16 @@ const Profile = () => {
                 onClose={handleCloseUserMenu}
             >
                 {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                        <Typography textAlign='center'>{setting}</Typography>
+                    <MenuItem
+                        key={setting.menuName}
+                        onClick={() => {
+                            handleCloseUserMenu()
+                            setting.cb()
+                        }}
+                    >
+                        <Typography textAlign='center'>
+                            {setting.menuName}
+                        </Typography>
                     </MenuItem>
                 ))}
             </Menu>
@@ -80,7 +97,6 @@ function Header(props) {
             <Divider />
             <List>
                 {menuItems.map((item) => {
-                    console.log(pathname, item.route)
                     const isSelected = pathname === item.route
                     return (
                         <>
@@ -199,5 +215,8 @@ Header.propTypes = {
      */
     window: PropTypes.func,
 }
+export const headerWrapper = (Component) => {
+    return <Header>{Component}</Header>
+}
 
-export default Header
+// export default Header
