@@ -1,0 +1,27 @@
+.modifyRequestsButton {
+  position: absolute;
+  right: 30px;
+}
+.modifycard {
+  margin: 5px auto 10px auto;
+}
+.statusChip {
+  position: absolute;
+  right: 50px;
+  bottom: 10px;
+}
+.card {
+  position: relative;
+}
+.modifiedData {
+  display: flex;
+  flex-direction: row;
+}
+.arbuttons {
+  display: flex;
+  flex-direction: row;
+}
+.acceptbutton {
+  position: absolute;
+  right: 8px;
+}

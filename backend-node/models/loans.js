@@ -17,6 +17,10 @@ const loanSchema = new Schema({
     type: Number,
     max: 100,
   },
+  status: {
+    type: String,
+    default: "Pending",
+  },
   modified: [
     {
       modified_user_id: {

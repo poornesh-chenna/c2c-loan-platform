@@ -12,13 +12,17 @@ router.post("/apply-loan", authorizeUser, async (req, res) => {
   }
   const newLoan = new Loan({
     user_id: req.userId,
-    Amount: req.body.Amount,
+    Amount: req.body.amount,
     Tenure: req.body.Tenure,
     Interest_Rate: req.body.Interest_Rate,
   });
   await newLoan.save();
   res.status(200).send("successfully applied for loan");
 });
+
+// router.get("/modified-loans",(req,res)=>{
+//   Loan.find({})
+// })
 
 router.post("/accept-modified-loans", (req, res) => {});
 
@@ -28,8 +32,11 @@ router.get("/loan-requests", async (req, res) => {
 });
 
 router.get("/myloans", authorizeUser, async (req, res) => {
-  const myloans = await Loan.find({ user_id: req.userId });
-  res.status(200).send(myloans);
+  const myloans = await Loan.find({ user_id: req.userId }).populate(
+    "modified.modified_user_id",
+    "username _id profile_image cibil"
+  );
+  res.status(200).send({ myloans });
 });
 
 export const LoanTakerRoutes = router;
