@@ -3,7 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import path from 'path'
 import fs from 'fs'
-// import swaggerUI from 'swagger-ui-express'
+import swaggerUI from 'swagger-ui-express'
 
 import { notFound } from './middlewares/notFound.js'
 import { errorHandler } from './middlewares/errorHandler.js'
@@ -12,7 +12,7 @@ import { AuthRouters } from './routers/auth.router.js'
 import { LoanTakerRoutes } from './routers/loanTaker.router.js'
 import { LoanGiverRoutes } from './routers/loanGiver.router.js'
 import { checkEnvVariables } from './utils/checkEnvVariables.js'
-// import { SwaggerSpecs } from './utils/swaggerSetup.js'
+import { SwaggerSpecs } from './utils/swaggerSetup.js'
 import { routing } from './routers/routing.js'
 
 const app = express()
@@ -58,7 +58,7 @@ app.use(LoanTakerRoutes)
 //APIS TO LEND LOANS
 app.use(LoanGiverRoutes)
 
-// app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(SwaggerSpecs))
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(SwaggerSpecs))
 
 app.use(routing)
 // REQUESTED ROUTE NOT FOUND

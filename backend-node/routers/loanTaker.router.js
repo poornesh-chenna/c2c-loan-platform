@@ -12,7 +12,7 @@ router.post("/apply-loan", authorizeUser, async (req, res) => {
   }
   const newLoan = new Loan({
     user_id: req.userId,
-    Amount: req.body.amount,
+    Amount: req.body.Amount,
     Tenure: req.body.Tenure,
     Interest_Rate: req.body.Interest_Rate,
   });
