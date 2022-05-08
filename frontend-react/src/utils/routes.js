@@ -5,3 +5,6 @@ export const ROUTES = {
     MY_LOANS: '/myloans',
     LEADINGS: '/lendings',
 }
+export const API_ROUTES = {
+    APPLY_LOAN: '/appy-loan',
+}
