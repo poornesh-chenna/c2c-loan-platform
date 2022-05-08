@@ -11,6 +11,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { Axios } from '../utils/Axios.js'
 import { API_ROUTES } from '../utils/routes.js'
+import { headerWrapper } from '../components/Header.js'
 export const ApplyLoan = () => {
     const formik = useFormik({
         initialValues: {
@@ -128,3 +129,5 @@ export const ApplyLoan = () => {
         </Box>
     )
 }
+
+export const ApplyLoanScreen = headerWrapper(<ApplyLoan />)
