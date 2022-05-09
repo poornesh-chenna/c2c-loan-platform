@@ -1,6 +1,6 @@
-import { Router } from 'express'
+import { Router } from "express";
 
-const router = Router()
+const router = Router();
 
 /**
  * @swagger
@@ -76,7 +76,7 @@ const router = Router()
  *         type: string
  */
 
-router.get('/hello', (req, res) => {
-    res.send({ message: 'Hey' })
-})
-export const routing = router
+router.get("/hello", (req, res) => {
+  res.send({ message: "Hey" });
+});
+export const routing = router;
