@@ -13,5 +13,7 @@ export const API_ROUTES = {
     SIGN_IN: '/login',
     LENDING_LOANS: '/lending-loans',
     LOAN_REQUESTS: '/loan-requests',
-    ACCEPT_LOAN: 'accept-loan',
+    ACCEPT_LOAN: '/accept-loan',
+    REJECT_LOAN: '/reject-loan',
+    MODIFY_LOAN: '/modify-loan',
 }

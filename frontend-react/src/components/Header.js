@@ -99,7 +99,7 @@ function Header(props) {
                 {menuItems.map((item, index) => {
                     const isSelected = pathname === item.route
                     return (
-                        <>
+                        <React.Fragment key={index}>
                             <ListItemButton
                                 onClick={() => navigate(item.route)}
                                 selected={isSelected}
@@ -111,7 +111,7 @@ function Header(props) {
                                 <ListItemText primary={item.menuName} />
                             </ListItemButton>
                             <Divider />
-                        </>
+                        </React.Fragment>
                     )
                 })}
             </List>
