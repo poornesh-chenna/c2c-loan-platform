@@ -21,21 +21,12 @@ router.post('/reject-loan', (req, res) => {})
 
 router.post('/accept-loan', authorizeUser, async (req, res) => {
     const loan = await Loan.findOne({ _id: req.body.loanId })
-    const acceptedLoans = new AcceptedLoans({
+    const acceptedLoans = await new AcceptedLoans({
         borrower_id: loan.user_id,
         lender_id: req.userId,
         loan_id: req.body.loanId,
-    })
-    Loan.updateOne(
-        { _id: req.body.loanId },
-        { status: 'Sanctioned' },
-        (err) => {
-            if (!err) {
-                res.status(200).send('Successfully accepted the loan')
-            }
-        }
-    )
-    await acceptedLoans.save()
+    }).save()
+    await Loan.updateOne({ _id: req.body.loanId }, { status: 'Sanctioned' })
     res.status(200).send({
         message: 'You are now Successfully accepted the loan',
     })

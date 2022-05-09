@@ -65,9 +65,9 @@ const Profile = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
             >
-                {settings.map((setting) => (
+                {settings.map((setting, index) => (
                     <MenuItem
-                        key={setting.menuName}
+                        key={index}
                         onClick={() => {
                             handleCloseUserMenu()
                             setting.cb()
@@ -96,14 +96,14 @@ function Header(props) {
             <Toolbar />
             <Divider />
             <List>
-                {menuItems.map((item) => {
+                {menuItems.map((item, index) => {
                     const isSelected = pathname === item.route
                     return (
                         <>
                             <ListItemButton
                                 onClick={() => navigate(item.route)}
                                 selected={isSelected}
-                                key={item.route}
+                                key={index}
                             >
                                 <ListItemIcon>
                                     {(() => item.icon)()}

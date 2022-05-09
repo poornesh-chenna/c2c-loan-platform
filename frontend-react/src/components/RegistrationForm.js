@@ -139,7 +139,7 @@ export const SignIn = ({ notRegistered }) => {
                 localStorage.setItem('jwtKey', res.data.jwtToken)
                 formik.resetForm()
                 setbtnLoading(false)
-                navigate(ROUTES.DASHBOARD)
+                navigate(ROUTES.APPLY_LOANS)
             } catch (err) {
                 setbtnLoading(false)
                 setTimeout(() => {
