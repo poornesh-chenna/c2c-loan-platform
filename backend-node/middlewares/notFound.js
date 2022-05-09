@@ -1,5 +1,5 @@
 export const notFound = (req, res, next) => {
-    res.send({
+    res.status(400).send({
         message: 'Route not found.',
     })
 }
