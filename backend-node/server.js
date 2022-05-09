@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
@@ -14,6 +15,24 @@ import { LoanGiverRoutes } from './routers/loanGiver.router.js'
 import { checkEnvVariables } from './utils/checkEnvVariables.js'
 // import { SwaggerSpecs } from "./utils/swaggerSetup.js";
 import { routing } from './routers/routing.js'
+=======
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import path from "path";
+import fs from "fs";
+//rt swaggerUI from 'swagger-ui-express'
+
+import { notFound } from "./middlewares/notFound.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
+import { connectMongoDb } from "./models/initMongoose.js";
+import { AuthRouters } from "./routers/auth.router.js";
+import { LoanTakerRoutes } from "./routers/loanTaker.router.js";
+import { LoanGiverRoutes } from "./routers/loanGiver.router.js";
+import { checkEnvVariables } from "./utils/checkEnvVariables.js";
+// import { SwaggerSpecs } from "./utils/swaggerSetup.js";
+import { routing } from "./routers/routing.js";
+>>>>>>> 256ab0f7270ffb342c968aa16d9ae7641d62877c
 
 const app = express()
 

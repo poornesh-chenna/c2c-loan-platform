@@ -1,13 +1,13 @@
 .modifyRequestsButton {
   position: absolute;
-  right: 30px;
+  right: 10px;
 }
 .modifycard {
-  margin: 5px auto 10px auto;
+  margin: 7px auto 10px auto;
 }
 .statusChip {
   position: absolute;
-  right: 50px;
+  right: 20px;
   bottom: 10px;
 }
 .card {

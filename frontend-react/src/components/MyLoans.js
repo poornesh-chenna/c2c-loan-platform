@@ -18,6 +18,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 import "./styles/myloans.css";
+import { headerWrapper } from "./Header";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -53,7 +54,9 @@ function MyLoans() {
 
   return (
     <div>
-      <Typography variant="h3">My Loans</Typography>
+      <Typography variant="h3" sx={{ marginBottom: "2rem" }}>
+        My Loans
+      </Typography>
 
       {myloans.length === 0 ? (
         <div>apply for loans</div>
@@ -61,7 +64,10 @@ function MyLoans() {
         myloans.map((loan, index) => {
           return (
             <div className="loanCard" key={index}>
-              <Card className="card" sx={{ minWidth: 275, mb: 2 }}>
+              <Card
+                className="card"
+                sx={{ minWidth: 275, mb: "1rem", backgroundColor: "#F5F5F5" }}
+              >
                 <CardActions className="modifyRequestsButton">
                   <Button
                     size="small"
@@ -69,11 +75,10 @@ function MyLoans() {
                     value={index}
                     variant="outlined"
                   >
-                    Modified Requsts
+                    Modified Loans
                   </Button>
                 </CardActions>
                 <CardContent>
-                  .
                   <Typography
                     sx={{ fontSize: 14 }}
                     color="text.secondary"
@@ -82,7 +87,13 @@ function MyLoans() {
                     Loan ID - {loan._id}
                   </Typography>
                   <Typography variant="h5" component="div" gutterBottom>
-                    Loan Amount : <span>{loan.Amount}</span>
+                    Loan Amount :{" "}
+                    <span>
+                      {Number(loan.Amount).toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "INR",
+                      })}
+                    </span>
                   </Typography>
                   <Box
                     className="loan_details"
@@ -93,14 +104,14 @@ function MyLoans() {
                       component="div"
                       sx={{ width: 300 }}
                     >
-                      Period : <span>{loan.Tenure}</span>
+                      Period : <span>{loan.Tenure} Months</span>
                     </Typography>
                     <Typography
                       variant="h6"
                       component="div"
                       sx={{ width: 300 }}
                     >
-                      Interest Rate : <span>{loan.Interest_Rate}</span>
+                      Interest Rate : <span>{loan.Interest_Rate}%</span>
                     </Typography>
                   </Box>
                   {loan.status === "Reject" ? (
@@ -122,6 +133,7 @@ function MyLoans() {
                   ) : (
                     <div className="statusChip">
                       <Chip
+                        // sx={{ alignSelf: "flex-end" }}
                         color="info"
                         label="Pending"
                         icon={<PendingIcon />}
@@ -174,13 +186,13 @@ function MyLoans() {
                   <Card
                     className="card"
                     sx={{
-                      minWidth: 275,
-                      width: 700,
+                      width: 470,
+                      backgroundColor: "#F5F5F5",
                     }}
                   >
                     <CardContent>
                       <Typography variant="h5" component="div">
-                        username
+                        {" From user " + modifiedLoan.modified_user_id.username}
                       </Typography>
                       <div className="modifiedData">
                         <Typography variant="h6" component="div">
@@ -216,4 +228,4 @@ function MyLoans() {
   );
 }
 
-export default MyLoans;
+export const MyLoansScreen = headerWrapper(<MyLoans />);

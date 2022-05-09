@@ -33,6 +33,10 @@ const loanSchema = new Schema({
       Interest_Rate: {
         type: Number,
       },
+      status: {
+        type: String,
+        default: "Pending",
+      },
     },
   ],
 });
