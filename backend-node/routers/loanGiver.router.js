@@ -25,36 +25,17 @@ router.post('/reject-loan', async (req, res) => {
 });
 
 router.post('/accept-loan', authorizeUser, async (req, res) => {
-<<<<<<< HEAD
-    const loan = await Loan.findOne({ _id: req.body.loanId })
-    const acceptedLoans = await new AcceptedLoans({
-        borrower_id: loan.user_id,
-        lender_id: req.userId,
-        loan_id: req.body.loanId,
-    }).save()
-    await Loan.updateOne({ _id: req.body.loanId }, { status: 'Sanctioned' })
-    res.status(200).send({
-        message: 'You are now Successfully accepted the loan',
-    })
-})
-=======
   const loan = await Loan.findOne({ _id: req.body.loanId });
-  const acceptedLoans = new AcceptedLoans({
+  const acceptedLoans = await new AcceptedLoans({
     borrower_id: loan.user_id,
     lender_id: req.userId,
     loan_id: req.body.loanId,
-  });
-  Loan.updateOne({ _id: req.body.loanId }, { status: 'Sanctioned' }, (err) => {
-    if (!err) {
-      res.status(200).send('Successfully accepted the loan');
-    }
-  });
-  await acceptedLoans.save();
+  }).save();
+  await Loan.updateOne({ _id: req.body.loanId }, { status: 'Sanctioned' });
   res.status(200).send({
     message: 'You are now Successfully accepted the loan',
   });
 });
->>>>>>> fa13b11817c2afa5a3a4242150d8dba2a209bef2
 
 router.patch('/modify-loan', authorizeUser, async (req, res) => {
   Loan.updateOne(

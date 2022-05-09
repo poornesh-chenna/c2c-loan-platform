@@ -1,96 +1,95 @@
-import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { Axios } from '../utils/Axios';
-import Dialog from '@mui/material/Dialog';
-import Chip from '@mui/material/Chip';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Slide from '@mui/material/Slide';
-import PendingIcon from '@mui/icons-material/Pending';
-import DoneIcon from '@mui/icons-material/Done';
-import CancelIcon from '@mui/icons-material/Cancel';
-import { Alert, AlertTitle } from '@mui/material';
+import React, { useEffect, useState } from 'react'
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import { Axios } from '../utils/Axios'
+import Dialog from '@mui/material/Dialog'
+import Chip from '@mui/material/Chip'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
+import Slide from '@mui/material/Slide'
+import PendingIcon from '@mui/icons-material/Pending'
+import DoneIcon from '@mui/icons-material/Done'
+import CancelIcon from '@mui/icons-material/Cancel'
+import { Alert, AlertTitle } from '@mui/material'
 
-import './styles/myloans.css';
-import { headerWrapper } from './Header';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '../utils/routes';
+import './styles/myloans.css'
+import { headerWrapper } from './Header'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '../utils/routes'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+  return <Slide direction="up" ref={ref} {...props} />
+})
 
 function MyLoans() {
-  const [selectedLoan, setselectedLoan] = useState(null);
-  const [modifiedLoans, setModifiedLoans] = useState(null);
-  const [myloans, setMyloans] = useState([]);
-  const [loanIndex, setloanIndex] = useState();
-  const [open, setOpen] = useState(false);
-  const [isModifiedclicked, setisModifiedclicked] = useState(false);
-  const navigate = useNavigate();
+  const [selectedLoan, setselectedLoan] = useState(null)
+  const [myloans, setMyloans] = useState([])
+  const [loanIndex, setloanIndex] = useState()
+  const [open, setOpen] = useState(false)
+  const [isModifiedclicked, setisModifiedclicked] = useState(false)
+  const navigate = useNavigate()
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   useEffect(() => {
     const getLoans = async () => {
-      const MyLoans = await Axios.get('/myloans');
-      console.log('myloans', MyLoans.data.myloans);
-      setMyloans(MyLoans.data.myloans);
-    };
-    getLoans();
-  }, []);
+      const MyLoans = await Axios.get('/myloans')
+      console.log('myloans', MyLoans.data.myloans)
+      setMyloans(MyLoans.data.myloans)
+    }
+    getLoans()
+  }, [])
 
   const getModifiedRequests = (e) => {
-    setOpen(true);
-    setisModifiedclicked(true);
-    console.log(e.target.value);
-    setloanIndex(e.target.value);
-  };
+    setOpen(true)
+    setisModifiedclicked(true)
+    console.log(e.target.value)
+    setloanIndex(e.target.value)
+  }
 
-  console.log(myloans);
+  console.log(myloans)
 
   const acceptModified = async (e) => {
     setMyloans((state) => {
-      const loan = state.find((value) => value._id === selectedLoan);
-      loan.status = 'Sanctioned';
-      return state;
-    });
-    const modifiedloanIndex = e.target.value;
-    console.log(myloans[loanIndex].modified[e.target.value]);
+      const loan = state.find((value) => value._id === selectedLoan)
+      loan.status = 'Sanctioned'
+      return state
+    })
+    const modifiedloanIndex = e.target.value
+    console.log(myloans[loanIndex].modified[e.target.value])
     const data = {
       loanId: myloans[loanIndex]._id,
       modified_id: myloans[loanIndex].modified[modifiedloanIndex]._id,
       tenure: myloans[loanIndex].modified[modifiedloanIndex].Tenure,
       interest_rate:
         myloans[loanIndex].modified[modifiedloanIndex].Interest_Rate,
-    };
-    await Axios.post('/accept-modified-loan', data);
-    handleClose();
-  };
+    }
+    await Axios.post('/accept-modified-loan', data)
+    handleClose()
+  }
 
   const regectModified = async (e) => {
-    console.log('hey');
-    const modifiedloanIndex = e.target.value;
+    console.log('hey')
+    const modifiedloanIndex = e.target.value
     const data = {
       loanId: myloans[loanIndex]._id,
       modified_id: myloans[loanIndex].modified[modifiedloanIndex]._id,
-    };
-    const res = await Axios.post('/reject-modified-loan', data);
-    console.log(res.data);
+    }
+    const res = await Axios.post('/reject-modified-loan', data)
+    console.log(res.data)
     setMyloans((state) => {
-      const loan = state.find((loan) => loan._id === selectedLoan);
-      loan.modified.splice(modifiedloanIndex, 1);
-      return [...state];
-    });
-  };
+      const loan = state.find((loan) => loan._id === selectedLoan)
+      loan.modified.splice(modifiedloanIndex, 1)
+      return [...state]
+    })
+  }
 
   return (
     <div>
@@ -130,8 +129,8 @@ function MyLoans() {
                     <Button
                       size="small"
                       onClick={(e) => {
-                        setselectedLoan(loan._id);
-                        getModifiedRequests(e);
+                        setselectedLoan(loan._id)
+                        getModifiedRequests(e)
                       }}
                       value={index}
                       variant="outlined"
@@ -205,7 +204,7 @@ function MyLoans() {
                 </CardContent>
               </Card>
             </div>
-          );
+          )
         })
       )}
 
@@ -229,12 +228,8 @@ function MyLoans() {
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 Modified requests by users
               </Typography>
-              <Button autoFocus color="inherit" onClick={handleClose}>
-                save
-              </Button>
             </Toolbar>
           </AppBar>
-          {/* {console.log(myloans[1].modified.length)} */}
 
           {myloans[loanIndex].modified.length === 0 ? (
             <Box sx={{ m: '2rem' }}>
@@ -295,7 +290,7 @@ function MyLoans() {
                     </CardActions>
                   </Card>
                 </div>
-              );
+              )
             })
           )}
         </Dialog>
@@ -303,7 +298,7 @@ function MyLoans() {
         ''
       )}
     </div>
-  );
+  )
 }
 
-export const MyLoansScreen = headerWrapper(<MyLoans />);
+export const MyLoansScreen = headerWrapper(<MyLoans />)
