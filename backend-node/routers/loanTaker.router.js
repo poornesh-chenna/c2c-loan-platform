@@ -24,8 +24,8 @@ router.post('/apply-loan', authorizeUser, async (req, res) => {
 router.post('/accept-modified-loan', authorizeUser, async (req, res) => {
     const loan = await Loan.findOne({ _id: req.body.loanId })
     const acceptedLoans = await new AcceptedLoans({
-        borrower_id: loan.user_id,
-        lender_id: req.userId,
+        borrower_id: req.userId,
+        lender_id: loan.user_id,
         loan_id: req.body.loanId,
     }).save()
     const modified_id = req.body.modified_id
