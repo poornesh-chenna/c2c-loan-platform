@@ -21,7 +21,7 @@ import { Alert, AlertTitle } from '@mui/material'
 import './styles/myloans.css'
 import { headerWrapper } from './Header'
 import { useNavigate } from 'react-router-dom'
-import { API_ROUTES, ROUTES } from '../utils/routes'
+import { ROUTES } from '../utils/routes'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction='up' ref={ref} {...props} />
@@ -29,7 +29,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function MyLoans() {
     const [selectedLoan, setselectedLoan] = useState(null)
-    const [modifiedLoans, setModifiedLoans] = useState(null)
     const [myloans, setMyloans] = useState([])
     const [loanIndex, setloanIndex] = useState()
     const [open, setOpen] = useState(false)
@@ -140,7 +139,7 @@ function MyLoans() {
                                             value={index}
                                             variant='outlined'
                                         >
-                                            Modified Requests
+                                            Modified Loans
                                         </Button>
                                     </CardActions>
                                 )}
@@ -249,16 +248,8 @@ function MyLoans() {
                             >
                                 Modified requests by users
                             </Typography>
-                            <Button
-                                autoFocus
-                                color='inherit'
-                                onClick={handleClose}
-                            >
-                                save
-                            </Button>
                         </Toolbar>
                     </AppBar>
-                    {/* {console.log(myloans[1].modified.length)} */}
 
                     {myloans[loanIndex].modified.length === 0 ? (
                         <Box sx={{ m: '2rem' }}>

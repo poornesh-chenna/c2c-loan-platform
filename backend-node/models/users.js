@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose'
+const Schema = mongoose.Schema
 
 const userSchema = new Schema({
   username: {
@@ -29,7 +29,8 @@ const userSchema = new Schema({
 
   cibil: {
     type: Number,
+    default: 600,
   },
-});
+})
 
-export const User = mongoose.model('User', userSchema);
+export const User = mongoose.model('User', userSchema)
