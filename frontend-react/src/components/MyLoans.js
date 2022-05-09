@@ -16,19 +16,25 @@ import Slide from '@mui/material/Slide';
 import PendingIcon from '@mui/icons-material/Pending';
 import DoneIcon from '@mui/icons-material/Done';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { Alert, AlertTitle } from '@mui/material';
 
 import './styles/myloans.css';
 import { headerWrapper } from './Header';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../utils/routes';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 function MyLoans() {
+  const [selectedLoan, setselectedLoan] = useState(null);
+  const [modifiedLoans, setModifiedLoans] = useState(null);
   const [myloans, setMyloans] = useState([]);
   const [loanIndex, setloanIndex] = useState();
   const [open, setOpen] = useState(false);
   const [isModifiedclicked, setisModifiedclicked] = useState(false);
+  const navigate = useNavigate();
   const handleClose = () => {
     setOpen(false);
   };
@@ -36,7 +42,7 @@ function MyLoans() {
   useEffect(() => {
     const getLoans = async () => {
       const MyLoans = await Axios.get('/myloans');
-      console.log(MyLoans.data.myloans);
+      console.log('myloans', MyLoans.data.myloans);
       setMyloans(MyLoans.data.myloans);
     };
     getLoans();
@@ -50,7 +56,13 @@ function MyLoans() {
   };
 
   console.log(myloans);
+
   const acceptModified = async (e) => {
+    setMyloans((state) => {
+      const loan = state.find((value) => value._id === selectedLoan);
+      loan.status = 'Sanctioned';
+      return state;
+    });
     const modifiedloanIndex = e.target.value;
     console.log(myloans[loanIndex].modified[e.target.value]);
     const data = {
@@ -64,14 +76,45 @@ function MyLoans() {
     handleClose();
   };
 
+  const regectModified = async (e) => {
+    console.log('hey');
+    const modifiedloanIndex = e.target.value;
+    const data = {
+      loanId: myloans[loanIndex]._id,
+      modified_id: myloans[loanIndex].modified[modifiedloanIndex]._id,
+    };
+    const res = await Axios.post('/reject-modified-loan', data);
+    console.log(res.data);
+    setMyloans((state) => {
+      const loan = state.find((loan) => loan._id === selectedLoan);
+      loan.modified.splice(modifiedloanIndex, 1);
+      return [...state];
+    });
+  };
+
   return (
     <div>
-      <Typography variant="h3" sx={{ marginBottom: '2rem' }}>
+      <Typography variant="h4" sx={{ marginBottom: '2rem' }}>
         My Loans
       </Typography>
-
       {myloans.length === 0 ? (
-        <div>apply for loans</div>
+        <div>
+          <Box sx={{ m: '2rem' }}>
+            <Alert severity="info">
+              <AlertTitle>Info</AlertTitle>
+              <strong>No loans Applied</strong>
+            </Alert>
+          </Box>
+          <Box display="flex" justifyContent="center">
+            <Button
+              onClick={() => navigate(ROUTES.APPLY_LOANS)}
+              variant="contained"
+              size="large"
+            >
+              Apply for Loan
+            </Button>
+          </Box>
+        </div>
       ) : (
         myloans.map((loan, index) => {
           return (
@@ -86,7 +129,10 @@ function MyLoans() {
                   <CardActions className="modifyRequestsButton">
                     <Button
                       size="small"
-                      onClick={getModifiedRequests}
+                      onClick={(e) => {
+                        setselectedLoan(loan._id);
+                        getModifiedRequests(e);
+                      }}
                       value={index}
                       variant="outlined"
                     >
@@ -191,7 +237,12 @@ function MyLoans() {
           {/* {console.log(myloans[1].modified.length)} */}
 
           {myloans[loanIndex].modified.length === 0 ? (
-            <div>no modified requests</div>
+            <Box sx={{ m: '2rem' }}>
+              <Alert severity="info">
+                <AlertTitle>Info</AlertTitle>
+                <strong>No modified Requests</strong>
+              </Alert>
+            </Box>
           ) : (
             myloans[loanIndex].modified.map((modifiedLoan, index) => {
               return (
@@ -222,7 +273,12 @@ function MyLoans() {
                     </CardContent>
                     <CardActions>
                       <div className="arbuttons">
-                        <Button variant="outlined" color="error">
+                        <Button
+                          variant="outlined"
+                          color="error"
+                          value={index}
+                          onClick={regectModified}
+                        >
                           Reject
                         </Button>
                         <div className="acceptbutton">

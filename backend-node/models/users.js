@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -12,6 +12,10 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
+  },
+  isProfileCompleted: {
+    type: Boolean,
+    default: false,
   },
   profile_image: String,
   aadhar_image: String,
@@ -28,4 +32,4 @@ const userSchema = new Schema({
   },
 });
 
-export const User = mongoose.model("User", userSchema);
+export const User = mongoose.model('User', userSchema);
