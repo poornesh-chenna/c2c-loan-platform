@@ -9,5 +9,4 @@ const options = {
     },
 }
 
-console.log(options)
 export const transporter = nodemailer.createTransport(options)

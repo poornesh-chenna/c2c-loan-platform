@@ -43,10 +43,7 @@ const Profile = () => {
         localStorage.removeItem('userDetails')
         navigate(ROUTES.HOME)
     }
-    const settings = [
-        { menuName: 'Profile', cb: () => {} },
-        { menuName: 'Logout', cb: logoutHandler },
-    ]
+    const settings = [{ menuName: 'Logout', cb: logoutHandler }]
     return (
         <>
             <Tooltip title='Open settings'>
@@ -110,7 +107,10 @@ function Header(props) {
                     return (
                         <Fragment key={index}>
                             <ListItemButton
-                                onClick={() => navigate(item.route)}
+                                onClick={() => {
+                                    handleDrawerToggle()
+                                    navigate(item.route)
+                                }}
                                 selected={isSelected}
                                 key={index}
                             >

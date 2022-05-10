@@ -39,19 +39,15 @@ router.post('/login', async (req, res) => {
 router.post('/signup', async (req, res) => {
   const foundUser = await User.findOne({ email: req.body.email })
   if (foundUser) {
-    res.status(400).send({
+    return res.status(400).send({
       message: 'This email is already registered with us',
     })
   } else {
-    try {
-      const newUser = await new User({
-        email: req.body.email,
-        username: req.body.username,
-        password: req.body.password,
-      }).save()
-    } catch (err) {
-      res.status(500).send({ message: 'failed to register user - ' + err })
-    }
+    const newUser = await new User({
+      email: req.body.email,
+      username: req.body.username,
+      password: req.body.password,
+    }).save()
 
     res.status(200).send({ message: 'Successfully registered' })
   }
@@ -100,7 +96,9 @@ router.patch(
       },
       (err, data) => {
         if (err) {
-          res.status(500).send({ message: 'cant update user profile records' })
+          res.status(500).send({
+            message: 'cant update user profile records',
+          })
         } else {
           res.status(200).send({
             message: 'successfully updated records',
@@ -117,9 +115,9 @@ router.get('/profile-page', authorizeUser, async (req, res) => {
       '-password'
     )
   } catch (err) {
-    res
-      .status(500)
-      .send({ message: 'failed to fetch the user profile details' })
+    res.status(500).send({
+      message: 'failed to fetch the user profile details',
+    })
     return
   }
 

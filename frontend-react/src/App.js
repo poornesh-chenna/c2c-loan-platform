@@ -29,7 +29,6 @@ export const App = () => {
         } catch (err) {}
         if (!user) navigate(ROUTES.HOME)
         else if (!user.isProfileCompleted) {
-            navigate(ROUTES.PROFILE_UPDATE)
             setuserDetails(user)
         } else {
             setuserDetails(user)
