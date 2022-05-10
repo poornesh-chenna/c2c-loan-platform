@@ -186,7 +186,7 @@ function MyLoans() {
                     <div className="statusChip">
                       <Chip
                         icon={<CancelIcon />}
-                        label="Reject"
+                        label="Rejected"
                         color="error"
                       />
                     </div>
