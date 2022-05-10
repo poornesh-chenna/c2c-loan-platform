@@ -5,14 +5,13 @@ import { Axios } from '../utils/Axios'
 import { API_ROUTES, ROUTES } from '../utils/routes'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom'
 
 const LendingLoans = () => {
   const navigate = useNavigate()
-  const [isLoading, setisLoading] = useState(false)
+  const [, setisLoading] = useState(false)
   const [lendings, setlendings] = useState([])
   const fetchLendings = async () => {
     setisLoading(true)

@@ -21,8 +21,7 @@ export const ProfileUpdateScreen = () => {
         severity: '',
     })
     const navigate = useNavigate()
-    const { setuserDetails, saveUsertoLocal, userDetails } =
-        useContext(StateContext)
+    const { setuserDetails, userDetails } = useContext(StateContext)
     const [formState, setformState] = useState({
         salary: '',
         bankAccNo: '',
@@ -80,11 +79,7 @@ export const ProfileUpdateScreen = () => {
             formData.append('bankName', formState.bankName)
             formData.append('accountNo', formState.bankAccNo)
             formData.append('customer_name', formState.AccHolderName)
-            const res = await Axios.patch(
-                API_ROUTES.PROFILE_UPLOAD,
-                formData,
-                {}
-            )
+            await Axios.patch(API_ROUTES.PROFILE_UPLOAD, formData, {})
             setalertMsg({
                 message: 'Profile Updated',
                 open: true,

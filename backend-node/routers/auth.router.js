@@ -43,12 +43,16 @@ router.post('/signup', async (req, res) => {
       message: 'This email is already registered with us',
     })
   } else {
-    const newUser = new User({
-      email: req.body.email,
-      username: req.body.username,
-      password: req.body.password,
-    })
-    await newUser.save()
+    try {
+      const newUser = await new User({
+        email: req.body.email,
+        username: req.body.username,
+        password: req.body.password,
+      }).save()
+    } catch (err) {
+      res.status(500).send({ message: 'failed to register user - ' + err })
+    }
+
     res.status(200).send({ message: 'Successfully registered' })
   }
 })
@@ -76,14 +80,11 @@ router.patch(
   authorizeUser,
   upload.any(),
   async (req, res) => {
-    // console.log(req.files)
-    console.log(req.body)
     const cibilScore = await generateCibil(req.userId, req.body.salary)
     const imageFilenames = {}
     req.files.forEach((file) => {
       imageFilenames[file.fieldname] = file.filename
     })
-    console.log(imageFilenames)
     User.updateOne(
       { _id: req.userId },
       {
@@ -98,9 +99,8 @@ router.patch(
         isProfileCompleted: true,
       },
       (err, data) => {
-        console.log(data)
         if (err) {
-          res.status(500).send({ message: 'cant update user' })
+          res.status(500).send({ message: 'cant update user profile records' })
         } else {
           res.status(200).send({
             message: 'successfully updated records',
@@ -110,5 +110,20 @@ router.patch(
     )
   }
 )
+
+router.get('/profile-page', authorizeUser, async (req, res) => {
+  try {
+    const foundUser = await User.findOne({ _id: req.userId }).select(
+      '-password'
+    )
+  } catch (err) {
+    res
+      .status(500)
+      .send({ message: 'failed to fetch the user profile details' })
+    return
+  }
+
+  res.status(200).send({ foundUser })
+})
 
 export const AuthRouters = router
