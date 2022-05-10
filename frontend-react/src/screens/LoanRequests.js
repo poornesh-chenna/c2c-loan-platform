@@ -107,7 +107,7 @@ const LoanRequests = () => {
             })
         }
         const acceptHandler = async (loanId) => {
-            loadingOn()
+            loadingOn('Accept')
             try {
                 await Axios.post(API_ROUTES.ACCEPT_LOAN, {
                     loanId,
@@ -126,7 +126,7 @@ const LoanRequests = () => {
             }
         }
         const rejectHandler = async (loanId) => {
-            loadingOn()
+            loadingOn('Reject')
             try {
                 await Axios.post(API_ROUTES.REJECT_LOAN, {
                     loanId,
