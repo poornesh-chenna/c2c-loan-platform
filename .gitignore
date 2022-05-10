@@ -1,6 +1,5 @@
 backend-node/.env
 backend-node/node_modules
-backend-node/uploads
 
 
 frontend-react/README.md
