@@ -77,7 +77,9 @@ export const ApplyLoan = () => {
     console.log(alertMsg)
     return (
         <Box>
-            <Typography variant='h4'>Apply Loan</Typography>
+            <Typography variant='h4' mt={'1rem'}>
+                Apply Loan
+            </Typography>
             {alertMsg.open && (
                 <Alert sx={{ marginTop: '1rem' }} severity={alertMsg.severity}>
                     {alertMsg.message}

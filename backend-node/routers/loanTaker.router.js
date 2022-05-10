@@ -77,7 +77,7 @@ router.get('/loan-requests', authorizeUser, async (req, res) => {
     const allLoans = await Loan.find({
         user_id: { $ne: req.userId },
         status: 'Pending',
-    })
+    }).populate('user_id', 'username email cibil')
     res.status(200).send(allLoans)
 })
 

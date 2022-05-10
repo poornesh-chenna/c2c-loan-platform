@@ -21,6 +21,7 @@ const dialogInitialState = {
 }
 const LoanRequests = () => {
     const [loanRequests, setloanRequests] = useState([])
+    console.log(loanRequests)
     const [alertMsg, setalertMsg] = useState({
         message: '',
         open: false,
@@ -106,7 +107,7 @@ const LoanRequests = () => {
             })
         }
         const acceptHandler = async (loanId) => {
-            loadingOn()
+            loadingOn('Accept')
             try {
                 await Axios.post(API_ROUTES.ACCEPT_LOAN, {
                     loanId,
@@ -125,7 +126,7 @@ const LoanRequests = () => {
             }
         }
         const rejectHandler = async (loanId) => {
-            loadingOn()
+            loadingOn('Reject')
             try {
                 await Axios.post(API_ROUTES.REJECT_LOAN, {
                     loanId,
@@ -191,7 +192,8 @@ const LoanRequests = () => {
                                 Contact mail : {loanRequest.user_id.email}
                             </Typography>
                             <Typography variant='h6'>
-                                CIBIL : {loanRequest.cibil || 'No mentioned'}
+                                CIBIL :{' '}
+                                {loanRequest.user_id.cibil || 'No mentioned'}
                             </Typography>
                         </Box>
                     </Grid>

@@ -1,5 +1,5 @@
 import AddCardIcon from '@mui/icons-material/AddCard'
-import CommentBankIcon from '@mui/icons-material/CommentBank'
+import AssuredWorkloadIcon from '@mui/icons-material/AssuredWorkload'
 import ArticleIcon from '@mui/icons-material/Article'
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
 import { ROUTES } from './routes'
@@ -22,6 +22,6 @@ export const menuItems = [
     {
         menuName: 'Lendings',
         route: ROUTES.LEADINGS,
-        icon: <CommentBankIcon />,
+        icon: <AssuredWorkloadIcon />,
     },
 ]

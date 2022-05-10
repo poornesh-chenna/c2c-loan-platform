@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import BgImage from '../images/loan-bg.jpg'
 import Logo from '../images/logo.svg'
@@ -29,7 +29,7 @@ export const Home = () => {
     }
     const Forms = () => {
         return (
-            <Box sx={{}}>
+            <Box sx={{ mt: '3rem' }}>
                 {formScreen === formScreens.signUp ? (
                     <RegistrationForm
                         alreadyRegistered={() =>
@@ -76,22 +76,27 @@ export const Home = () => {
                 backgroundPositionX: 'center',
                 backgroundPositionY: 'center',
                 backgroundSize: 'cover',
-                height: '100vh',
+                minHeight: '100vh',
             }}
         >
             <Header />
-            <Box
+            <Grid
+                justifyContent={'space-between'}
+                alignItems='center'
+                container
                 sx={{
-                    display: 'flex',
                     marginTop: '5rem',
-                    marginX: '2rem',
-                    // flexDirection: 'column',
-                    justifyContent: 'space-between',
+                    // marginX: '2rem',
+                    px: '2rem',
                 }}
             >
-                <IntroText />
-                <Forms />
-            </Box>
+                <Grid item md={6} xs={12}>
+                    <IntroText />
+                </Grid>
+                <Grid sx={{ mb: '4rem' }} item md={6} xs={12}>
+                    <Forms />
+                </Grid>
+            </Grid>
         </Box>
     )
 }

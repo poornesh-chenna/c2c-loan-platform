@@ -20,7 +20,7 @@ router.get('/lending-loans', authorizeUser, async (req, res) => {
     res.status(200).send(lending_loans)
 })
 
-router.post('/reject-loan', async (req, res) => {
+router.post('/reject-loan', authorizeUser, async (req, res) => {
     const loan = await Loan.findOneAndUpdate(
         { _id: req.body.loanId },
         { status: 'Rejected' }

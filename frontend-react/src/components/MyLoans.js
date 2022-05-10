@@ -93,7 +93,7 @@ function MyLoans() {
 
     return (
         <div>
-            <Typography variant='h4' sx={{ marginBottom: '2rem' }}>
+            <Typography mt='1rem' variant='h4' sx={{ marginBottom: '2rem' }}>
                 My Loans
             </Typography>
             {myloans.length === 0 ? (

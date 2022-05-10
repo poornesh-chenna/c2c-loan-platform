@@ -49,9 +49,10 @@ export const RegistrationForm = ({ alreadyRegistered }) => {
         <div>
             <Card
                 sx={{
+                    mx: 'auto',
                     padding: '2rem',
                     display: 'flex',
-                    width: '20rem',
+                    maxWidth: '20rem',
                     flexDirection: 'column',
                     rowGap: '1rem',
                 }}
@@ -161,9 +162,10 @@ export const SignIn = ({ notRegistered }) => {
         <div>
             <Card
                 sx={{
+                    mx: 'auto',
                     padding: '2rem',
                     display: 'flex',
-                    width: '20rem',
+                    maxWidth: '20rem',
                     flexDirection: 'column',
                     rowGap: '1rem',
                 }}
