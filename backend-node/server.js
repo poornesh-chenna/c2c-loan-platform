@@ -12,6 +12,7 @@ import { LoanTakerRoutes } from './routers/loanTaker.router.js'
 import { LoanGiverRoutes } from './routers/loanGiver.router.js'
 import { checkEnvVariables } from './utils/checkEnvVariables.js'
 import { routing } from './routers/routing.js'
+import { MailService } from './controllers/nodemailer/sendMails.js'
 
 const app = express()
 
@@ -43,7 +44,8 @@ try {
     process.exit()
 }
 // CHECK SERVER HEALTH
-app.get('/check', (req, res) => {
+app.get('/check', async (req, res) => {
+    await MailService.loanApply('partheev8@outlook.com')
     res.send({ message: 'Server up and running....' })
 })
 
@@ -63,6 +65,6 @@ app.use(notFound)
 // GLOBAL ERROR HANDLING FOR API REQUEST
 app.use(errorHandler)
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server running on port ${process.env.PORT}`)
+app.listen(process.env.PORT || 3005, () => {
+    console.log(`Server running on port ${process.env.PORT || 3005}`)
 })

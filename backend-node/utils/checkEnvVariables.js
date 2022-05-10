@@ -1,5 +1,5 @@
 export const checkEnvVariables = () => {
-    let variables = ['PORT', 'JWT_SECRET']
+    let variables = ['JWT_SECRET']
     if (process.env.NODE_ENV !== 'production') {
         const devVariables = ['MONGO_URI_DEV']
         variables = [...variables, ...devVariables]
