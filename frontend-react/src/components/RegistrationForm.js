@@ -1,6 +1,5 @@
 import {
     Alert,
-    Box,
     Button,
     Card,
     CircularProgress,
@@ -34,7 +33,7 @@ export const RegistrationForm = ({ alreadyRegistered }) => {
         onSubmit: async (values) => {
             setbtnLoading(true)
             try {
-                const res = await Axios.post(API_ROUTES.SIGN_UP, {
+                await Axios.post(API_ROUTES.SIGN_UP, {
                     email: values.email,
                     username: values.username,
                     password: values.password,

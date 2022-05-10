@@ -74,9 +74,15 @@ const LoanRequests = () => {
         })
         const Loading = (btnName) => {
             if (loadingState.loading) {
-                return (
-                    <CircularProgress sx={{ color: 'white' }} size='1.5rem' />
-                )
+                if (loadingState.btnName === btnName) {
+                    return (
+                        <CircularProgress
+                            sx={{ color: 'white' }}
+                            size='1.5rem'
+                        />
+                    )
+                }
+                return btnName
             }
             return btnName
         }
@@ -102,7 +108,7 @@ const LoanRequests = () => {
         const acceptHandler = async (loanId) => {
             loadingOn()
             try {
-                const res = await Axios.post(API_ROUTES.ACCEPT_LOAN, {
+                await Axios.post(API_ROUTES.ACCEPT_LOAN, {
                     loanId,
                 })
                 setalertMsg({
@@ -121,7 +127,7 @@ const LoanRequests = () => {
         const rejectHandler = async (loanId) => {
             loadingOn()
             try {
-                const res = await Axios.post(API_ROUTES.REJECT_LOAN, {
+                await Axios.post(API_ROUTES.REJECT_LOAN, {
                     loanId,
                 })
                 setalertMsg({

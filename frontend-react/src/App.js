@@ -34,6 +34,7 @@ export const App = () => {
         } else {
             setuserDetails(user)
         }
+        //eslint-disable-next-line
     }, [])
 
     return (

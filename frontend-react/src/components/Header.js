@@ -40,6 +40,7 @@ const Profile = () => {
     }
     const logoutHandler = () => {
         localStorage.removeItem('jwtKey')
+        localStorage.removeItem('userDetails')
         navigate(ROUTES.HOME)
     }
     const settings = [
