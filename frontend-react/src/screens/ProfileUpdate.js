@@ -27,9 +27,9 @@ export const ProfileUpdateScreen = () => {
         bankAccNo: '',
         bankName: '',
         AccHolderName: '',
-        aadharFile: { url: '', file: 'null' },
-        panFile: { url: '', file: 'null' },
-        profilePic: { url: '', file: 'null' },
+        aadharFile: { url: '', file: null },
+        panFile: { url: '', file: null },
+        profilePic: { url: '', file: null },
     })
     const fileSelect = (file, key) => {
         if (!file) return

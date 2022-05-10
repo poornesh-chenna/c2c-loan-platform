@@ -15,6 +15,8 @@ import { useNavigate } from 'react-router-dom'
 import { StateContext } from '../App'
 export const RegistrationForm = ({ alreadyRegistered }) => {
     const [btnLoading, setbtnLoading] = useState(false)
+    const [alertMsg, setalertMsg] = useState(null)
+
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -42,6 +44,12 @@ export const RegistrationForm = ({ alreadyRegistered }) => {
                 alreadyRegistered()
             } catch (err) {
                 setbtnLoading(false)
+                setTimeout(() => {
+                    setalertMsg(null)
+                }, 5000)
+                setalertMsg(
+                    err.response.data.message || 'Something went wrong!'
+                )
             }
         },
     })
@@ -103,6 +111,8 @@ export const RegistrationForm = ({ alreadyRegistered }) => {
                         'Sign Up'
                     )}
                 </Button>
+                {alertMsg && <Alert severity='error'>{alertMsg}</Alert>}
+
                 <Typography
                     sx={{ cursor: 'pointer', alignSelf: 'center' }}
                     onClick={alreadyRegistered}

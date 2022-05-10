@@ -42,14 +42,14 @@ const LoanRequests = () => {
             return newState
         })
     }
+    console.log(loanRequests)
     const modifyHandler = async () => {
         try {
-            const res = await Axios.patch(API_ROUTES.MODIFY_LOAN, {
+            await Axios.patch(API_ROUTES.MODIFY_LOAN, {
                 loanId: dialogState.loanId,
                 Interest_Rate: dialogState.interest_rate,
                 Tenure: dialogState.tenure,
             })
-            console.log(res.data)
             setalertMsg({
                 message: 'Loan Modified!',
                 open: true,
