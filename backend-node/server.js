@@ -3,7 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import path from 'path'
 import fs from 'fs'
-
+import 'express-async-errors'
 import { notFound } from './middlewares/notFound.js'
 import { errorHandler } from './middlewares/errorHandler.js'
 import { connectMongoDb } from './models/initMongoose.js'

@@ -83,7 +83,6 @@ export class MailService {
             ${this.endHtml}
             `,
         })
-        console.log(res)
     }
     static async rejectLoanRequest(
         senderEmail,

@@ -8,11 +8,12 @@ import {
     Typography,
 } from '@mui/material'
 import { useFormik } from 'formik'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Axios } from '../utils/Axios'
 import { API_ROUTES, ROUTES } from '../utils/routes'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
+import { StateContext } from '../App'
 export const RegistrationForm = ({ alreadyRegistered }) => {
     const [btnLoading, setbtnLoading] = useState(false)
     const formik = useFormik({
@@ -116,6 +117,7 @@ export const RegistrationForm = ({ alreadyRegistered }) => {
 
 export const SignIn = ({ notRegistered }) => {
     const navigate = useNavigate()
+    const { setuserDetails } = useContext(StateContext)
     const [btnLoading, setbtnLoading] = useState(false)
     const [alertMsg, setalertMsg] = useState(null)
     const formik = useFormik({
@@ -139,7 +141,14 @@ export const SignIn = ({ notRegistered }) => {
                 localStorage.setItem('jwtKey', res.data.jwtToken)
                 formik.resetForm()
                 setbtnLoading(false)
-                navigate(ROUTES.APPLY_LOANS)
+                localStorage.setItem(
+                    'userDetails',
+                    JSON.stringify(res.data.userDetails)
+                )
+                setuserDetails(res.data.userDetails)
+                if (res.data?.userDetails?.isProfileCompleted) {
+                    navigate(ROUTES.APPLY_LOANS)
+                } else navigate(ROUTES.PROFILE_UPDATE)
             } catch (err) {
                 setbtnLoading(false)
                 setTimeout(() => {

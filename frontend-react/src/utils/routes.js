@@ -5,6 +5,7 @@ export const ROUTES = {
     LOAN_REQUESTS: '/loanRequest',
     MY_LOANS: '/myloans',
     LEADINGS: '/lendings',
+    PROFILE_UPDATE: '/profileUpdate',
 }
 
 export const API_ROUTES = {
@@ -16,4 +17,5 @@ export const API_ROUTES = {
     ACCEPT_LOAN: '/accept-loan',
     REJECT_LOAN: '/reject-loan',
     MODIFY_LOAN: '/modify-loan',
+    PROFILE_UPLOAD: '/profile-screen',
 }

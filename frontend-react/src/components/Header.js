@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { Fragment, useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
@@ -12,6 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import { menuItems } from '../utils/menuItems'
+import Logo from '../images/logo.svg'
 import {
     Avatar,
     ListItemButton,
@@ -22,11 +23,14 @@ import {
 } from '@mui/material'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { ROUTES } from '../utils/routes'
+import { StateContext } from '../App'
 
 const drawerWidth = 240
 const Profile = () => {
     const navigate = useNavigate()
-    const [anchorElUser, setAnchorElUser] = React.useState(null)
+    const { userDetails } = useContext(StateContext)
+    console.log(userDetails)
+    const [anchorElUser, setAnchorElUser] = useState(null)
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget)
     }
@@ -46,7 +50,7 @@ const Profile = () => {
         <>
             <Tooltip title='Open settings'>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt='Remy Sharp' src='/' />
+                    <Avatar alt={userDetails.username} src='/' />
                 </IconButton>
             </Tooltip>
             <Menu
@@ -65,8 +69,12 @@ const Profile = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
             >
+                <Typography sx={{ mx: '1rem' }}>
+                    Hey! {userDetails.username}
+                </Typography>
                 {settings.map((setting, index) => (
                     <MenuItem
+                        sx={{ px: '2rem' }}
                         key={index}
                         onClick={() => {
                             handleCloseUserMenu()
@@ -84,7 +92,7 @@ const Profile = () => {
 }
 function Header(props) {
     const { window } = props
-    const [mobileOpen, setMobileOpen] = React.useState(false)
+    const [mobileOpen, setMobileOpen] = useState(false)
     const { pathname } = useLocation()
     const navigate = useNavigate()
     const handleDrawerToggle = () => {
@@ -99,7 +107,7 @@ function Header(props) {
                 {menuItems.map((item, index) => {
                     const isSelected = pathname === item.route
                     return (
-                        <React.Fragment key={index}>
+                        <Fragment key={index}>
                             <ListItemButton
                                 onClick={() => navigate(item.route)}
                                 selected={isSelected}
@@ -111,7 +119,7 @@ function Header(props) {
                                 <ListItemText primary={item.menuName} />
                             </ListItemButton>
                             <Divider />
-                        </React.Fragment>
+                        </Fragment>
                     )
                 })}
             </List>
@@ -148,9 +156,20 @@ function Header(props) {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant='h6' noWrap component='div'>
-                            Responsive drawer
-                        </Typography>
+                        <Box sx={{ padding: '0.5rem' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Box
+                                    component='img'
+                                    sx={{ width: '5rem', pr: '0.5rem' }}
+                                    src={Logo}
+                                    alt='logo'
+                                />
+                                <Typography variant='h5' color='white'>
+                                    C2C Loan Platform
+                                </Typography>
+                            </Box>
+                        </Box>
+
                         <Profile />
                     </Box>
                 </Toolbar>
