@@ -18,6 +18,7 @@ router.post('/apply-loan', authorizeUser, async (req, res) => {
         Tenure: req.body.Tenure,
         Interest_Rate: req.body.Interest_Rate,
     }).save()
+
     const user = await User.findOne({ _id: req.userId }).select(
         'email username'
     )

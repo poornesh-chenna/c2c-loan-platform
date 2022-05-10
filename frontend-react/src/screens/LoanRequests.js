@@ -1,5 +1,6 @@
 import {
     Alert,
+    AlertTitle,
     Box,
     Button,
     Card,
@@ -21,7 +22,6 @@ const dialogInitialState = {
 }
 const LoanRequests = () => {
     const [loanRequests, setloanRequests] = useState([])
-    console.log(loanRequests)
     const [alertMsg, setalertMsg] = useState({
         message: '',
         open: false,
@@ -107,7 +107,7 @@ const LoanRequests = () => {
             })
         }
         const acceptHandler = async (loanId) => {
-            loadingOn('Accept')
+            loadingOn()
             try {
                 await Axios.post(API_ROUTES.ACCEPT_LOAN, {
                     loanId,
@@ -126,7 +126,7 @@ const LoanRequests = () => {
             }
         }
         const rejectHandler = async (loanId) => {
-            loadingOn('Reject')
+            loadingOn()
             try {
                 await Axios.post(API_ROUTES.REJECT_LOAN, {
                     loanId,
@@ -145,113 +145,118 @@ const LoanRequests = () => {
         }
 
         return (
-            <Card
-                sx={{
-                    p: '1rem',
-                    mb: '2rem',
-                    backgroundColor: '#ebebeb',
-                }}
-            >
-                <Grid container rowGap={'1.5rem'}>
-                    {/* Loan Details */}
-                    <Grid item md={4} xs={12}>
-                        <Box>
-                            <Typography>Loan Id : {loanRequest._id}</Typography>
-                            <Typography paddingY={'0.5rem'} variant='h5'>
-                                Loan Amount :
-                                {Number(loanRequest.Amount).toLocaleString(
-                                    'en-IN',
-                                    {
-                                        style: 'currency',
-                                        currency: 'INR',
-                                    }
-                                )}
-                            </Typography>
-                            <Typography variant='h6'>
-                                Tenure : {loanRequest.Tenure}
-                            </Typography>
-                            <Typography variant='h6'>
-                                Interest Rate : {loanRequest.Interest_Rate}
-                            </Typography>
-                        </Box>
-                    </Grid>
-                    {/* Borrower details */}
-                    <Grid item md={4} xs={12}>
-                        <Box>
-                            <Typography
-                                textAlign={'center'}
-                                variant='h5'
-                                sx={{ textDecorationLine: 'underline' }}
-                            >
-                                User Details
-                            </Typography>
-                            <Typography variant='h6'>
-                                Username : {loanRequest.user_id.username}
-                            </Typography>
-                            <Typography variant='h6'>
-                                Contact mail : {loanRequest.user_id.email}
-                            </Typography>
-                            <Typography variant='h6'>
-                                CIBIL :{' '}
-                                {loanRequest.user_id.cibil || 'No mentioned'}
-                            </Typography>
-                        </Box>
-                    </Grid>
-                    <Grid item md={4} xs={12}>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                height: '100%',
-                            }}
-                        >
+            <>
+                <Card
+                    sx={{
+                        p: '1rem',
+                        mb: '2rem',
+                        backgroundColor: '#ebebeb',
+                    }}
+                >
+                    <Grid container rowGap={'1.5rem'}>
+                        {/* Loan Details */}
+                        <Grid item md={4} xs={12}>
+                            <Box>
+                                <Typography>
+                                    Loan Id : {loanRequest._id}
+                                </Typography>
+                                <Typography paddingY={'0.5rem'} variant='h5'>
+                                    Loan Amount :
+                                    {Number(loanRequest.Amount).toLocaleString(
+                                        'en-IN',
+                                        {
+                                            style: 'currency',
+                                            currency: 'INR',
+                                        }
+                                    )}
+                                </Typography>
+                                <Typography variant='h6'>
+                                    Tenure : {loanRequest.Tenure}
+                                </Typography>
+                                <Typography variant='h6'>
+                                    Interest Rate : {loanRequest.Interest_Rate}
+                                </Typography>
+                            </Box>
+                        </Grid>
+                        {/* Borrower details */}
+                        <Grid item md={4} xs={12}>
+                            <Box>
+                                <Typography
+                                    textAlign={'center'}
+                                    variant='h5'
+                                    sx={{ textDecorationLine: 'underline' }}
+                                >
+                                    User Details
+                                </Typography>
+                                <Typography variant='h6'>
+                                    Username : {loanRequest.user_id.username}
+                                </Typography>
+                                <Typography variant='h6'>
+                                    Contact mail : {loanRequest.user_id.email}
+                                </Typography>
+                                <Typography variant='h6'>
+                                    CIBIL :{' '}
+                                    {loanRequest.cibil || 'No mentioned'}
+                                </Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item md={4} xs={12}>
                             <Box
                                 sx={{
-                                    width: '8rem',
                                     display: 'flex',
-                                    flexDirection: 'column',
+                                    justifyContent: 'center',
                                     height: '100%',
-                                    justifyContent: 'space-between',
                                 }}
                             >
-                                <Button
-                                    onClick={() =>
-                                        acceptHandler(loanRequest._id)
-                                    }
-                                    variant='contained'
-                                    color='success'
+                                <Box
+                                    sx={{
+                                        width: '8rem',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        height: '100%',
+                                        justifyContent: 'space-between',
+                                    }}
                                 >
-                                    {Loading('Accept')}
-                                </Button>
-                                <Button
-                                    sx={{ marginY: '0.5rem' }}
-                                    variant='outlined'
-                                    color='warning'
-                                    onClick={() =>
-                                        setdialogState({
-                                            open: true,
-                                            loanId: loanRequest._id,
-                                        })
-                                    }
-                                >
-                                    {Loading('Modify')}
-                                </Button>
-                                <Button
-                                    onClick={() =>
-                                        rejectHandler(loanRequest._id)
-                                    }
-                                    variant='contained'
-                                    color='error'
-                                >
-                                    {Loading('Reject')}
-                                </Button>
+                                    <Button
+                                        onClick={() =>
+                                            acceptHandler(loanRequest._id)
+                                        }
+                                        variant='contained'
+                                        color='success'
+                                    >
+                                        {Loading('Accept')}
+                                    </Button>
+                                    <Button
+                                        sx={{ marginY: '0.5rem' }}
+                                        variant='outlined'
+                                        color='warning'
+                                        onClick={() =>
+                                            setdialogState({
+                                                open: true,
+                                                loanId: loanRequest._id,
+                                            })
+                                        }
+                                    >
+                                        {Loading('Modify')}
+                                    </Button>
+                                    <Button
+                                        onClick={() =>
+                                            rejectHandler(loanRequest._id)
+                                        }
+                                        variant='contained'
+                                        color='error'
+                                    >
+                                        {Loading('Reject')}
+                                    </Button>
+                                </Box>
                             </Box>
-                        </Box>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </Card>
+                </Card>
+            </>
         )
     }
+
     return (
         <Box>
             <Dialog open={dialogState.open}>
@@ -308,6 +313,7 @@ const LoanRequests = () => {
             <Typography variant='h4' marginBottom={'1.5rem'}>
                 Loan Requests
             </Typography>
+
             {alertMsg.open && (
                 <Alert
                     sx={{ my: '1rem' }}
@@ -319,9 +325,23 @@ const LoanRequests = () => {
                     {alertMsg.message}
                 </Alert>
             )}
-            {loanRequests.map((loanRequest, index) => {
-                return <LoanCard key={index} loanRequest={loanRequest} />
-            })}
+            {loanRequests.length === 0 ? (
+                <div>
+                    <Box sx={{ m: '2rem' }}>
+                        <Alert severity='info'>
+                            <AlertTitle>Info</AlertTitle>
+                            <strong>
+                                There are no loan requests at present .
+                            </strong>
+                            <p>Stay Tuned!</p>
+                        </Alert>
+                    </Box>
+                </div>
+            ) : (
+                loanRequests.map((loanRequest, index) => {
+                    return <LoanCard key={index} loanRequest={loanRequest} />
+                })
+            )}
         </Box>
     )
 }
