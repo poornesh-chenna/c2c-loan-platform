@@ -45,7 +45,7 @@ try {
 }
 // CHECK SERVER HEALTH
 app.get('/check', async (req, res) => {
-    await MailService.loanApply('partheev8@outlook.com')
+    console.log('check')
     res.send({ message: 'Server up and running....' })
 })
 

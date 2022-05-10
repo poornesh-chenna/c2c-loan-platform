@@ -29,7 +29,6 @@ const drawerWidth = 240
 const Profile = () => {
     const navigate = useNavigate()
     const { userDetails } = useContext(StateContext)
-    console.log(userDetails)
     const [anchorElUser, setAnchorElUser] = useState(null)
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget)

@@ -8,7 +8,7 @@ import {
     TextField,
     Typography,
 } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { Axios } from '../utils/Axios.js'
@@ -16,6 +16,15 @@ import { API_ROUTES } from '../utils/routes.js'
 import { headerWrapper } from '../components/Header.js'
 export const ApplyLoan = () => {
     const [isLoading, setisLoading] = useState(false)
+    const [maxEligibleLoan, setmaxEligibleLoan] = useState(null)
+    useEffect(() => {
+        const fetchMaxEligibleLoan = async () => {
+            const res = await Axios.get(API_ROUTES.MAX_ELIGIBLE_LOAN)
+            setmaxEligibleLoan(res.data.maxEligibleLoan)
+        }
+        fetchMaxEligibleLoan()
+    }, [])
+
     const [alertMsg, setalertMsg] = useState({
         message: '',
         open: false,
@@ -36,7 +45,10 @@ export const ApplyLoan = () => {
             amount: Yup.number()
                 .typeError('Amount must be number.')
                 .min(500, 'Minimum loan amount is 500')
-                .max(10000000, 'Maximum loan amount is 10000000')
+                .max(
+                    maxEligibleLoan || 100000,
+                    `Maximum loan amount is ${maxEligibleLoan}`
+                )
                 .required('Loan amount is required.'),
             tenure: Yup.number()
                 .typeError('Tenure must in number')
@@ -54,7 +66,6 @@ export const ApplyLoan = () => {
                     Tenure: values.tenure,
                     Interest_Rate: values.interest_rate,
                 })
-                console.log('applied')
                 setalertMsg({
                     message:
                         'Loan applied! Receipt sent to mail ( Check spam incase )',
@@ -74,11 +85,17 @@ export const ApplyLoan = () => {
             setisLoading(false)
         },
     })
-    console.log(alertMsg)
     return (
         <Box>
             <Typography variant='h4' mt={'1rem'}>
                 Apply Loan
+            </Typography>
+            <Typography pt='1rem' variant='h6'>
+                Maximum Eligible Loan:{' '}
+                {Number(maxEligibleLoan).toLocaleString('en-IN', {
+                    style: 'currency',
+                    currency: 'INR',
+                })}
             </Typography>
             {alertMsg.open && (
                 <Alert sx={{ marginTop: '1rem' }} severity={alertMsg.severity}>

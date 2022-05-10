@@ -42,7 +42,6 @@ const LoanRequests = () => {
             return [...newState]
         })
     }
-    console.log(loanRequests)
     const modifyHandler = async () => {
         try {
             await Axios.patch(API_ROUTES.MODIFY_LOAN, {

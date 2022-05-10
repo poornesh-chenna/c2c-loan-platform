@@ -18,4 +18,5 @@ export const API_ROUTES = {
     REJECT_LOAN: '/reject-loan',
     MODIFY_LOAN: '/modify-loan',
     PROFILE_UPLOAD: '/profile-screen',
+    MAX_ELIGIBLE_LOAN: '/maxEligibleLoan',
 }
