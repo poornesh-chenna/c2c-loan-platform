@@ -1,15 +1,17 @@
-import { Typography } from '@mui/material'
+import { Alert, AlertTitle, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { headerWrapper } from '../components/Header'
 import { Axios } from '../utils/Axios'
-import { API_ROUTES } from '../utils/routes'
+import { API_ROUTES, ROUTES } from '../utils/routes'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
+import { useNavigate } from 'react-router-dom'
 
 const LendingLoans = () => {
+  const navigate = useNavigate()
   const [isLoading, setisLoading] = useState(false)
   const [lendings, setlendings] = useState([])
   const fetchLendings = async () => {
@@ -32,7 +34,23 @@ const LendingLoans = () => {
     <>
       <Typography variant="h4">My Lendings</Typography>
       {lendings.length === 0 ? (
-        <div>No lendings</div>
+        <div>
+          <Box sx={{ m: '2rem' }}>
+            <Alert severity="info">
+              <AlertTitle>Info</AlertTitle>
+              <strong>No lending loans</strong>
+            </Alert>
+          </Box>
+          <Box display="flex" justifyContent="center">
+            <Button
+              onClick={() => navigate(ROUTES.LOAN_REQUESTS)}
+              variant="contained"
+              size="large"
+            >
+              Lend Loans
+            </Button>
+          </Box>
+        </div>
       ) : (
         lendings.map((lending, index) => {
           return (
