@@ -12,16 +12,13 @@ router.post('/apply-loan', authorizeUser, async (req, res) => {
   if (!(await isValidAmount(req.body.amount))) {
     throw new BadRequestError('Amount limit is exceeded')
   }
-  try {
-    const newLoan = await new Loan({
-      user_id: req.userId,
-      Amount: req.body.amount,
-      Tenure: req.body.Tenure,
-      Interest_Rate: req.body.Interest_Rate,
-    }).save()
-  } catch (err) {
-    res.status(500).send({ message: 'failed to apply for loan - ' + err })
-  }
+  const newLoan = await new Loan({
+    user_id: req.userId,
+    Amount: req.body.amount,
+    Tenure: req.body.Tenure,
+    Interest_Rate: req.body.Interest_Rate,
+  }).save()
+
   const user = await User.findOne({ _id: req.userId }).select('email username')
   await MailService.loanApply(
     user.email,
