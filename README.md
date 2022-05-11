@@ -8,7 +8,7 @@ Clone the project
 
 ### `git clone https://github.com/poornesh-chenna/c2c-loan-platform.git`
 
-In the project directory, we have frontend-react and backend-node directory which are specific to frontend and backend application:
+In the project directory, we have frontend-react and backend-node directory which are specific to frontend and backend applications respectively:
 
 ### To run frontend :
 
