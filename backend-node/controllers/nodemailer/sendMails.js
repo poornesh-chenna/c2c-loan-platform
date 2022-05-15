@@ -59,8 +59,7 @@ export class MailService {
 
         lender_email,
         borrower_username,
-        borrower_email,
-        emi
+        borrower_email
     ) {
         const res = await transporter.sendMail({
             from: 'partheev8@gmail.com',
@@ -99,7 +98,7 @@ export class MailService {
             subject: 'Loan Sanctioned - C2C Platform ',
 
             html: `
-            <h4>Sanctioned Loan Details</h4>
+            <h4>Rejected Loan Details</h4>
             <p>Loan Id : ${loanId} </p>
             <h6>Amount : ${amount}</h6>
             <h6> Tenure : ${tenure} Months</h6>
